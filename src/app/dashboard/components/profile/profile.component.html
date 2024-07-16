@@ -1,0 +1,177 @@
+@if(userService.showEditUser()){
+<ng-container>
+  <div
+    class="py-10 px-3 bg-grey-lighter flex flex-row justify-between items-center bg-slate-200"
+  >
+    <svg
+      fill="#000000"
+      width="26px"
+      height="26px"
+      viewBox="0 0 52 52"
+      data-name="Layer 1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      class="cursor-pointer"
+      (click)="closeModalEditUser()"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M50,24H6.83L27.41,3.41a2,2,0,0,0,0-2.82,2,2,0,0,0-2.82,0l-24,24a1.79,1.79,0,0,0-.25.31A1.19,1.19,0,0,0,.25,25c0,.07-.07.13-.1.2l-.06.2a.84.84,0,0,0,0,.17,2,2,0,0,0,0,.78.84.84,0,0,0,0,.17l.06.2c0,.07.07.13.1.2a1.19,1.19,0,0,0,.09.15,1.79,1.79,0,0,0,.25.31l24,24a2,2,0,1,0,2.82-2.82L6.83,28H50a2,2,0,0,0,0-4Z"
+        ></path>
+      </g>
+    </svg>
+  </div>
+
+  <div class="max-w-lg mx-auto p-5">
+    <label>
+      @if(previewAvatar){
+        <img
+        class="w-32 h-32 rounded-full mx-auto cursor-pointer hover:opacity-50"
+        [src]="previewAvatar"
+        alt="Profile picture"
+      />
+      } @else {
+        <img
+          class="w-32 h-32 rounded-full mx-auto cursor-pointer hover:opacity-50"
+          [src]="getAvatarUser()"
+          alt="Profile picture"
+        />
+      }
+        <input id="name" type="file" class="hidden" (change)="selectFiles($event)"/>
+    </label>
+    <form [formGroup]="formProfile" (ngSubmit)="handleSubmit()">
+      <div class="mb-6">
+        <label for="name" class="block text-gray-800 font-bold">Name:</label>
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Enter your name"
+          min="3"
+          max="30"
+          formControlName="name"
+        />
+      </div>
+      <div class="mb-6">
+        <label for="lastname" class="block text-gray-800 font-bold"
+          >lastname:</label
+        >
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="text"
+          name="lastname"
+          id="lastname"
+          placeholder="Enter your lastname"
+          min="3"
+          max="30"
+          formControlName="lastname"
+        />
+      </div>
+      <div class="mb-6">
+        <label for="about" class="block text-gray-800 font-bold">About:</label>
+        <textarea
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="text"
+          name="about"
+          rows="6"
+          id="about"
+          placeholder="Enter your about"
+          min="3"
+          max="300"
+          formControlName="about"
+        ></textarea>
+      </div>
+
+      <input
+        type="submit"
+        value="Save"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md py-2 px-4 w-full cursor-pointer"
+      />
+    </form>
+  </div>
+</ng-container>
+
+} @else {
+<ng-container>
+  <div
+    class="py-10 px-3 bg-grey-lighter flex flex-row justify-between items-center bg-slate-200"
+  >
+    <svg
+      fill="#000000"
+      width="26px"
+      height="26px"
+      viewBox="0 0 52 52"
+      data-name="Layer 1"
+      id="Layer_1"
+      xmlns="http://www.w3.org/2000/svg"
+      class="cursor-pointer"
+      (click)="closeProfileUser()"
+    >
+      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+      <g
+        id="SVGRepo_tracerCarrier"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      ></g>
+      <g id="SVGRepo_iconCarrier">
+        <path
+          d="M50,24H6.83L27.41,3.41a2,2,0,0,0,0-2.82,2,2,0,0,0-2.82,0l-24,24a1.79,1.79,0,0,0-.25.31A1.19,1.19,0,0,0,.25,25c0,.07-.07.13-.1.2l-.06.2a.84.84,0,0,0,0,.17,2,2,0,0,0,0,.78.84.84,0,0,0,0,.17l.06.2c0,.07.07.13.1.2a1.19,1.19,0,0,0,.09.15,1.79,1.79,0,0,0,.25.31l24,24a2,2,0,1,0,2.82-2.82L6.83,28H50a2,2,0,0,0,0-4Z"
+        ></path>
+      </g>
+    </svg>
+  </div>
+
+  <div class="max-w-lg mx-auto p-5">
+    <img
+      class="w-32 h-32 rounded-full mx-auto"
+      [src]="getAvatarUser()"
+      alt="Profile picture"
+    />
+    <section class="flex justify-center">
+      <h2 class="text-center text-2xl font-semibold mt-3">
+        {{ getCurrentUser().name }} {{ getCurrentUser().lastname }}
+      </h2>
+      <svg
+        width="30px"
+        height="30px"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="cursor-pointer"
+        (click)="openModalEditUser()"
+      >
+        <g id="SVGRepo_iconCarrier">
+          <path
+            d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z"
+            stroke="#000000"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+          <path
+            d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13"
+            stroke="#000000"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </g>
+      </svg>
+    </section>
+    <section class="mt-5">
+      <h3 class="text-xl font-semibold">About</h3>
+      <p class="text-gray-600 mt-2">
+        {{ getCurrentUser().about }}
+      </p>
+    </section>
+  </div>
+</ng-container>
+
+}
