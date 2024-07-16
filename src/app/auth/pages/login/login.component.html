@@ -1,0 +1,56 @@
+<div class="h-screen bg-gray-100 flex justify-center py-24">
+  <div class="py-12 px-8 h-96 w-1/4 mt-20 bg-white rounded shadow-xl">
+    <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+      <div class="mb-6">
+        <label for="email" class="block text-gray-800 font-bold">Email:</label>
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+          min="3"
+          max="30"
+          formControlName="email"
+        />
+        @if(formService.isValidField('email', loginForm)){
+        <span class="text-red-500">
+          {{ formService.getFieldError("email", loginForm) }}
+        </span>
+        }
+      </div>
+
+      <div>
+        <label for="password" class="block text-gray-800 font-bold">Password:</label>
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="**********************"
+          required
+          min="3"
+          max="30"
+          formControlName="password"
+        />
+
+        @if(formService.isValidField('password', loginForm)){
+        <span class="text-red-500">
+          {{ formService.getFieldError("password", loginForm) }}
+        </span>
+        }
+      </div>
+      <input
+        type="submit"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md py-2 mt-6 px-4 w-full cursor-pointer"
+        value="Login"
+      />
+    </form>
+    <div class="mt-6 text-green-500 text-center">
+      <a routerLink="/register" class="hover:underline"
+        >Don't have an account? Register</a
+      >
+    </div>
+  </div>
+</div>

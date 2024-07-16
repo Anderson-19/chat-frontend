@@ -1,0 +1,120 @@
+<div class="h-screen bg-gray-100 flex justify-center py-16">
+  <div class="py-12 px-8 h-auto w-1/4 mt-20 bg-white rounded shadow-xl">
+    <form [formGroup]="registerForm" (ngSubmit)="handleSubmit()">
+      <div class="mb-6">
+        <label for="name" class="block text-gray-800 font-bold">Name:</label>
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="text"
+          id="name"
+          placeholder="Enter your name"
+          required
+          min="3"
+          max="30"
+          formControlName="name"
+        />
+
+        @if(formService.isValidField('name', registerForm)){
+        <span class="text-red-500">
+          {{ formService.getFieldError("name", registerForm) }}
+        </span>
+        }
+      </div>
+
+      <div class="mb-6">
+        <label for="lastname" class="block text-gray-800 font-bold"
+          >Lastname:</label
+        >
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="text"
+          id="lastname"
+          placeholder="Enter your lastname"
+          required
+          min="3"
+          max="30"
+          formControlName="lastname"
+        />
+
+        @if(formService.isValidField('lastname', registerForm)){
+        <span class="text-red-500">
+          {{ formService.getFieldError("lastname", registerForm) }}
+        </span>
+        }
+      </div>
+
+      <div class="mb-6">
+        <label for="username" class="block text-gray-800 font-bold"
+          >Username:</label
+        >
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="text"
+          id="username"
+          placeholder="Enter your username"
+          required
+          min="3"
+          max="30"
+          formControlName="username"
+        />
+
+        @if(formService.isValidField('username', registerForm)){
+        <span class="text-red-500">
+          {{ formService.getFieldError("username", registerForm) }}
+        </span>
+        }
+      </div>
+
+      <div class="mb-6">
+        <label for="email" class="block text-gray-800 font-bold">Email:</label>
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Enter your email"
+          required
+          min="3"
+          max="30"
+          formControlName="email"
+        />
+        @if(formService.isValidField('email', registerForm)){
+        <span class="text-red-500">
+          {{ formService.getFieldError("email", registerForm) }}
+        </span>
+        }
+      </div>
+
+      <div>
+        <label for="password" class="block text-gray-800 font-bold"
+          >Password:</label
+        >
+        <input
+          class="w-full border border-gray-300 py-2 pl-3 rounded mt-2 outline-none focus:ring-indigo-600 :ring-indigo-600"
+          type="password"
+          name="password"
+          id="password"
+          placeholder="**********************"
+          required
+          min="3"
+          max="30"
+          formControlName="password"
+        />
+
+        @if(formService.isValidField('password', registerForm)){
+        <span class="text-red-500">
+          {{ formService.getFieldError("password", registerForm) }}
+        </span>
+        }
+      </div>
+      <input
+        type="submit"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md py-2 mt-6 px-4 w-full cursor-pointer"
+        value="Register"
+      />
+    </form>
+    <div class="mt-6 text-green-500 text-center">
+      <a routerLink="" class="hover:underline">Don't have an account? Log In</a>
+    </div>
+  </div>
+</div>
