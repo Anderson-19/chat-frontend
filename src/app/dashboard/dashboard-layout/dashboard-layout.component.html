@@ -1,0 +1,128 @@
+<div>
+  <div class="w-full h-32" style="background-color: #449388"></div>
+
+  <div class="container mx-auto mt-[-128px]">
+    <div class="py-6 h-screen">
+      <div class="flex border border-grey rounded shadow-lg h-full">
+        <!-- Left -->
+        @if(userService.showProfileUser()){
+        <div class="w-1/3 h-screen flex flex-col">
+          <profile />
+        </div>
+        } @else {
+        <div class="w-1/3 border flex flex-col">
+          <!-- Header -->
+          <header-left />
+
+          <!-- Search -->
+          <div class="py-2 px-2 bg-grey-lightest bg-slate-200">
+            <input
+              type="text"
+              class="w-full px-2 py-2 text-sm"
+              placeholder="Search or start new chat"
+            />
+          </div>
+
+          <!-- Contacts -->
+          <div class="bg-grey-lighter flex-1 overflow-auto">
+            @for (contact of contacts; track contact._id) {
+            <Contact
+              _id="{{ contact._id }}"
+              name="{{ contact.name }}"
+              lastname="{{ contact.lastname }}"
+              updatedAt="{{ contact.updatedAt }}"
+              avatar="{{ contact.avatar }}"
+              (click)="selectedUser(contact)"
+            />
+            }
+          </div>
+        </div>
+        } @if(selectedContact()){
+        <!-- Right -->
+        <div class="w-2/3 border flex flex-col bg-slate-200">
+          <!-- Header -->
+          <header-right
+            [name]="selectedContact().name"
+            [lastname]="selectedContact().lastname"
+            [avatar]="selectedContact().avatar"
+            [isActive]="isActive"
+          />
+          <!-- Messages -->
+          <div class="flex-1 overflow-auto" style="background-color: #dad3cc">
+            <div class="py-2 px-3">
+              <div class="flex justify-center mb-2">
+                @if(dateStartConversation){
+                  <div
+                    class="rounded py-2 px-4"
+                    style="background-color: #ddecf2"
+                  >
+                    <p class="text-sm uppercase">{{ dateStartConversation | date }}</p>
+                  </div>
+                }
+              </div>
+
+              <div class="flex justify-center mb-4"></div>
+
+              @for(message of messages; track message._id){ @if(message.senderId
+              === senderId){
+              <div class="flex justify-end mb-2">
+                <div
+                  class="rounded py-2 px-3"
+                  style="background-color: #e2f7cb"
+                >
+                  <!-- <p class="text-sm text-end">Yo</p> -->
+                  <p class="text-sm mt-1">{{ message.message }}</p>
+                  <p class="text-right text-xs text-grey-dark mt-1">
+                    {{ message.createdAt | date : "shortTime" }}
+                  </p>
+                </div>
+              </div>
+              } @else {
+              <div class="flex mb-2">
+                <div
+                  class="rounded py-2 px-3"
+                  style="background-color: #f2f2f2"
+                >
+                  <!-- <p class="text-sm text-teal">Sylverter Stallone</p> -->
+                  <p class="text-sm mt-1">
+                    {{ message.message }}
+                  </p>
+                  <p class="text-right text-xs text-grey-dark mt-1">
+                    {{ message.createdAt | date : "shortTime" }}
+                  </p>
+                </div>
+              </div>
+              } }
+            </div>
+          </div>
+
+          <!-- Input -->
+          <div class="bg-grey-lighter px-4 py-4 flex items-center">
+            <form
+              class="flex-1 mx-4"
+              [formGroup]="inputMessageForm"
+              (ngSubmit)="handleSubmitMessage()"
+            >
+              <input
+                class="w-full border rounded px-2 py-2"
+                type="text"
+                formControlName="input"
+                placeholder="Enter message"
+              />
+            </form>
+          </div>
+        </div>
+        } @else {
+        <div class="w-2/3 border flex flex-col bg-slate-200"></div>
+        }
+        
+        @if(userService.showInformationContact()){
+          <div class="w-1/3 h-screen flex flex-col">
+            <other-profile />
+          </div>
+         }
+      </div>
+    </div>
+  </div>
+</div>
+
