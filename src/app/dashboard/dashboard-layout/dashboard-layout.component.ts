@@ -16,6 +16,7 @@ import {
   HeaderRightComponent,
   ProfileComponent,
   OtherProfileComponent,
+  MessageComponent,
 } from '../components';
 import { ConversationService } from '../services/conversation.service';
 
@@ -29,6 +30,7 @@ import { ConversationService } from '../services/conversation.service';
     HeaderRightComponent,
     ProfileComponent,
     OtherProfileComponent,
+    MessageComponent,
     DatePipe,
     ReactiveFormsModule,
   ],
@@ -40,8 +42,8 @@ export class DashboardLayoutComponent implements OnInit {
   public userService = inject(UserService);
 
   public contacts: User[] = [];
-  public messages: Message[] = [];
   public isActive = false;
+  public show = false;
   public senderId = this.authService.currentUser()?._id;
   public dateStartConversation = "";
 
@@ -51,12 +53,16 @@ export class DashboardLayoutComponent implements OnInit {
 
   constructor() {
     this.conversationService.on('newMessage', (newMessage: Message) => {
-      this.messages = [...this.messages, newMessage];
+      this.conversationService.messages.update( lastMessages => [...lastMessages!, newMessage] );
     });
 
     this.conversationService.on('userConnected', (value: User) => {
       this.isActive = value.isActive;
     });
+  }
+
+  getMessages(): Message[]{
+    return this.conversationService.messages()!;
   }
 
   ngOnInit(): void {
@@ -94,6 +100,10 @@ export class DashboardLayoutComponent implements OnInit {
     return data.avatar;
   }
 
+  showDrowDown(): boolean{
+    return this.show = !this.show;
+  }
+
   selectedUser(contact: User) {
     this.conversationService.selectedUser({
       ...contact,
@@ -107,8 +117,8 @@ export class DashboardLayoutComponent implements OnInit {
   findAllMessages() {
     this.conversationService.findAllMessages(this.conversationService.contactInConversation()?._id!).subscribe({
       next: (data) => {
-        this.messages = data;
-        this.dateStartConversation = this.messages[0] ? this.messages[0]?.createdAt : "";
+        this.conversationService.messages.set(data);
+        this.dateStartConversation = this.conversationService.messages()![0] ? this.conversationService.messages()![0]?.createdAt : "";
       },
       error: (err) => err,
     });
@@ -121,6 +131,7 @@ export class DashboardLayoutComponent implements OnInit {
   public contactInConversationChangedEffect = effect(() => {
     this.authService.currentUser();
     this.conversationService.contactInConversation();
+    this.conversationService.messages();
     this.userService.showProfileUser();
   });
 }
