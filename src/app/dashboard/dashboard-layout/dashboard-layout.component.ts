@@ -100,10 +100,6 @@ export class DashboardLayoutComponent implements OnInit {
     return data.avatar;
   }
 
-  showDrowDown(): boolean{
-    return this.show = !this.show;
-  }
-
   selectedUser(contact: User) {
     this.conversationService.selectedUser({
       ...contact,
