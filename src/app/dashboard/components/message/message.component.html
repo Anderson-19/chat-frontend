@@ -1,0 +1,38 @@
+<div class="flex">
+  <p class="text-sm mt-1 mr-2">{{ message.message }}</p>
+  <p class="text-right text-xs text-grey-dark mt-3">
+    {{ message.createdAt | date : "shortTime" }}
+  </p>
+
+  <div class="ml-4 cursor-pointer" (click)="showDrowDown()">
+    <svg width="24" height="24">
+      <path
+        fill="#263238"
+        fill-opacity=".6"
+        d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z"
+      ></path>
+    </svg>
+    @if(show){
+    <a className="bg-gray-100 min-h-screen flex items-center justify-start">
+      <div
+        class="origin-top-right absolute right-auto mt-2 w-32 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+      >
+        <div
+          class="py-2 p-2"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="dropdown-button"
+          (click)="deleteMessage()"
+        >
+          <a
+            class="flex flex-block rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer"
+            role="menuitem"
+          >
+            Delete
+          </a>
+        </div>
+      </div>
+    </a>
+    }
+  </div>
+</div>
