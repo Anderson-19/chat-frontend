@@ -57,7 +57,7 @@ export class AuthService {
       return of(false);
     }
 
-    const headers = new HttpHeaders().set('x_token', token);
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${ token }`);
 
     return this.http.get<CheckTokenResponse>(url, { headers }).pipe(
       map(({ user, token }) => this.setAuthentication(user, token)),
